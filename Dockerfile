@@ -10,5 +10,5 @@ RUN dotnet publish -c Release -o /bin/app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /srv/endpoint
 COPY --from=build /bin/app ./
-EXPOSE 5001
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "Ecommerce.dll"]
