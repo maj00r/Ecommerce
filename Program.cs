@@ -43,20 +43,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromDays(7); // Customize expiration time
         options.SlidingExpiration = true; // Refresh expiration on activity
         options.Cookie.SecurePolicy = CookieSecurePolicy.None;
-        options.Cookie.Domain = "http://localhost:5173/";
         
     });
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins("http://localhost:5173")  // Your client-side app's URL
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();  // Allow cookies and credentials
-    });
-});
 
 var app = builder.Build();
 
@@ -64,22 +52,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-    app.UseHttpsRedirection();
-
-
 }
-
-
-app.UseStaticFiles();
-app.UseSwagger();      // Adds the Swagger endpoint
-app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        options.RoutePrefix = string.Empty;
-    });
-
 
 app.UseAuthentication();
 app.UseAuthorization();
